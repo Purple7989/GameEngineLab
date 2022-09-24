@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     Vector2 move;
     Vector2 rotate;
     private float walkSpeed = 5f;
+    private float rotateSpeed = 5f;
     public Camera playerCamera;
     Vector3 cameraRotation;
 
@@ -55,6 +57,9 @@ public class PlayerController : MonoBehaviour
 
         inputAction.Player.Shoot.performed += cntxt => Shoot();
 
+        inputAction.Player.Look.performed += cntxt => rotate = cntxt.ReadValue<Vector2>();
+        inputAction.Player.Look.canceled += cntxt => rotate = Vector2.zero;
+
         rb = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
         distanceToGround = GetComponentInParent<Collider>().bounds.extents.y;
@@ -76,6 +81,7 @@ public class PlayerController : MonoBehaviour
         bulletRb.AddForce(transform.up * 5f, ForceMode.Impulse);
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -83,7 +89,11 @@ public class PlayerController : MonoBehaviour
        transform.Translate(Vector3.forward * move.y * Time.deltaTime * walkSpeed, Space.Self);
         // for moving left & right relative to character
        transform.Translate(Vector3.right * move.x * Time.deltaTime * walkSpeed, Space.Self);
-        isGrounded = Physics.Raycast(transform.position, -Vector3.up, distanceToGround);
+
+       transform.Rotate(Vector3.up * rotate.x * Time.deltaTime * rotateSpeed, Space.Self);
+
+
+       isGrounded = Physics.Raycast(transform.position, -Vector3.up, distanceToGround);
         // (distanceToGround - 1.5f)
     }
 
