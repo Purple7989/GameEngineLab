@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
     //Projectile Bullets
     public GameObject bullet;
     public Transform projectilePos;
+    public int playerHealth = 4;
 
+    // Enable and Disable player actions script
     private void OnEnable()
     {
         inputAction.Player.Enable();
@@ -47,16 +49,16 @@ public class PlayerController : MonoBehaviour
         {
             instance = this;
         }
-
+        // Unity's input action system
         inputAction = new PlayerAction();
-
+        // checks if player pressed or released W & S & A & D
         inputAction.Player.Move.performed += cntxt => move = cntxt.ReadValue<Vector2>();
         inputAction.Player.Move.canceled += cntxt => move = Vector2.zero;
-
+        // Checks if player pressed SPACE
         inputAction.Player.Jump.performed += cntxt => Jump();
-
+        // Checks if player pressed LEFT MOUSE
         inputAction.Player.Shoot.performed += cntxt => Shoot();
-
+        // Checks if player has moved or stoped moving MOUSE POINTER
         inputAction.Player.Look.performed += cntxt => rotate = cntxt.ReadValue<Vector2>();
         inputAction.Player.Look.canceled += cntxt => rotate = Vector2.zero;
 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         distanceToGround = GetComponentInParent<Collider>().bounds.extents.y;
     }
-
+    // checks if player is on the ground then adds upwards velocity to player is jump is pressed
     private void Jump()
     {
         if(isGrounded)
@@ -73,12 +75,21 @@ public class PlayerController : MonoBehaviour
             isGrounded = false; 
         }
     }
-
+    // shoot function spawns and projectile and adds force too it
     private void Shoot()
     {
         Rigidbody bulletRb = Instantiate(bullet, projectilePos.position, Quaternion.identity).GetComponent<Rigidbody>();
         bulletRb.AddForce(transform.forward * 32f, ForceMode.Impulse);
         bulletRb.AddForce(transform.up * 5f, ForceMode.Impulse);
+    }
+
+    public void updatePlayerHealth(int damage)
+    {
+        playerHealth -= damage;
+        if(playerHealth <= 0)
+        {
+            Debug.Log("GAME OVER");
+        }
     }
 
 
@@ -89,7 +100,7 @@ public class PlayerController : MonoBehaviour
        transform.Translate(Vector3.forward * move.y * Time.deltaTime * walkSpeed, Space.Self);
         // for moving left & right relative to character
        transform.Translate(Vector3.right * move.x * Time.deltaTime * walkSpeed, Space.Self);
-
+        // rotates player left and right depending on mouse input from unity input system
        transform.Rotate(Vector3.up * rotate.x * Time.deltaTime * rotateSpeed, Space.Self);
 
 

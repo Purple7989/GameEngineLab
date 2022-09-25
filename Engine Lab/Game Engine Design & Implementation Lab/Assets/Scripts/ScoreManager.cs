@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    // to allow other scripts to accsess use this
+    // to allow other scripts to accsess use this (Singleton)
     public static ScoreManager instance;
-
+    // The score we use
     public int score = 0;
     // Start is called before the first frame update
     void Awake()
@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
             instance = this;
         }
     }
-
+    // public function for changing the score, other scripts can call this
     public void ChangeScore(int coinInput)
     {
         score += coinInput;
