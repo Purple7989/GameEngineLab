@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static SpikeEditorEvents;
 
 public class EditorManager : MonoBehaviour
 {
@@ -18,21 +19,15 @@ public class EditorManager : MonoBehaviour
     public bool editorMode = false;
     bool instantiated = false;
 
-
-    private void OnEnable()
-    {
-        inputAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputAction.Disable();
-    }
+    Vector3 mousePos;
+    Subject subject = new Subject();
 
     // Start is called before the first frame update
-    void Awake()
+    //changed awake to start
+    void Start()
     {
-        inputAction = new PlayerAction();
+        // now uses player input controller
+        inputAction = PlayerInputController.controller.inputAction;
 
         inputAction.Editor.EnableEditor.performed += cntxt => SwitchCamera();
 
@@ -62,25 +57,35 @@ public class EditorManager : MonoBehaviour
                 case 1:
                     {
                      item = Instantiate(prefab1);
+                        SpikeBall spike1 = new SpikeBall(item, new GreenMat());
+                        subject.AddObserver(spike1);
                     }
                     break;
                 case 2:
                     {
                      item = Instantiate(prefab2);
+                        SpikeBall spike2 = new SpikeBall(item, new GreenMat());
+                        subject.AddObserver(spike2);
                     }
                     break;
 
                 default:
                     break;
             }
-
+            subject.Notify();
             instantiated = true;
         }
     }
 
     private void Dropitem()
     {
-        
+        if (editorMode && instantiated)
+        {
+            item.GetComponent<Rigidbody>().useGravity = true;
+            item.GetComponent<Collider>().enabled = true;
+
+            instantiated = false;
+        }
     }
 
     // Update is called once per frame
@@ -97,6 +102,13 @@ public class EditorManager : MonoBehaviour
             editorMode = false;
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if(instantiated)
+        {
+            mousePos = Mouse.current.position.ReadValue();
+            mousePos = new Vector3 (mousePos.x, mousePos.y, 10.0f);
+            item.transform.position = editorCam.ScreenToWorldPoint(mousePos);
         }
     }
 }

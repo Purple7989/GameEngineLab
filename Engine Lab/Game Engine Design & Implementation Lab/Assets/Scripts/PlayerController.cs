@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
     //Projectile Bullets
     public GameObject bullet;
     public Transform projectilePos;
-    public int playerHealth = 4;
+
+    public int playerHealth = 2;
+    private Vector3 PlayerStartPos;
 
     // Enable and Disable player actions script
     private void OnEnable()
@@ -42,13 +44,17 @@ public class PlayerController : MonoBehaviour
         inputAction.Player.Disable();
     }
 
-    // Start is called before the first frame update
+    //void Start()
     void Awake()
     {
         if(!instance)
         {
             instance = this;
         }
+        // Using controller from PlayerInputController
+        //inputAction = PlayerInputController.controller.inputAction;
+
+        PlayerStartPos = gameObject.transform.position;
         // Unity's input action system
         inputAction = new PlayerAction();
         // checks if player pressed or released W & S & A & D
@@ -89,6 +95,8 @@ public class PlayerController : MonoBehaviour
         if(playerHealth <= 0)
         {
             Debug.Log("GAME OVER");
+            gameObject.transform.position = PlayerStartPos;
+            playerHealth = 2;
         }
     }
 
