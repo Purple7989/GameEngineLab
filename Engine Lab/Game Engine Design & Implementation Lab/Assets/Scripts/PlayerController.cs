@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     //public static PlayerController controller;
     Vector2 move;
     Vector2 rotate;
+    bool isPressed;
     private float walkSpeed = 5f;
     private float rotateSpeed = 5f;
     public Camera playerCamera;
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     private float distanceToGround;
     private bool isGrounded = true;
-    public float jump = 5;
+    public float jumpheight = 5;
     //Player Animation
     Animator playerAnimator;
     private bool isWalking = false;
@@ -78,13 +79,14 @@ public class PlayerController : MonoBehaviour
     {
         if(isGrounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump);
+            rb.velocity = new Vector2(rb.velocity.x, jumpheight);
             isGrounded = false; 
         }
     }
     // shoot function spawns and projectile and adds force too it
     private void Shoot()
     {
+        //if(isPressed == true)
         Rigidbody bulletRb = Instantiate(bullet, projectilePos.position, Quaternion.identity).GetComponent<Rigidbody>();
         bulletRb.AddForce(transform.forward * 32f, ForceMode.Impulse);
         bulletRb.AddForce(transform.up * 5f, ForceMode.Impulse);
