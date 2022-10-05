@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 57525688}
   - component: {fileID: 57525687}
   - component: {fileID: 57525686}
-  - component: {fileID: 57525685}
+  - component: {fileID: 57525690}
   m_Layer: 0
   m_Name: White BellObject
   m_TagString: Untagged
@@ -143,22 +143,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &57525685
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 57525684}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!136 &57525686
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -193,7 +177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a065860eee3727149a2613468e52441d, type: 2}
+  - {fileID: 2100000, guid: a53ef9996c5d44f46b4a2a8437263409, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,6 +222,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &57525690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57525684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc02444d598f1994f9d45827aac825d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &92471430
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +859,6 @@ GameObject:
   - component: {fileID: 886533357}
   - component: {fileID: 886533356}
   - component: {fileID: 886533355}
-  - component: {fileID: 886533354}
   - component: {fileID: 886533359}
   m_Layer: 0
   m_Name: Yellow BellObject (1)
@@ -872,22 +867,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!54 &886533354
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886533353}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!136 &886533355
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -922,7 +901,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a065860eee3727149a2613468e52441d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -976,7 +955,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 886533353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc02444d598f1994f9d45827aac825d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 20d36540116c3e24298ec876f5dcbd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &896911534
@@ -1253,6 +1232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1024777394}
+  - component: {fileID: 1024777395}
   m_Layer: 0
   m_Name: BellManager
   m_TagString: Untagged
@@ -1275,6 +1255,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1024777395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024777393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f509974c51c916b4c9d8620a9b592b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldSwap: 0
+  numofSwaps: 0
 --- !u!1 &1049298556 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8702594704185554700, guid: 29201602b34ab0f4eaaab5d31ff090dc, type: 3}
