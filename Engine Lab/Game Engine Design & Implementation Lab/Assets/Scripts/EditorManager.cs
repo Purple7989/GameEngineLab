@@ -7,6 +7,7 @@ using static SpikeEditorEvents;
 public class EditorManager : MonoBehaviour
 {
     PlayerAction inputAction;
+    public static EditorManager instance;
 
     public Camera mainCam;
     public Camera editorCam;
@@ -14,20 +15,40 @@ public class EditorManager : MonoBehaviour
     public GameObject prefab1;
     public GameObject prefab2;
 
-    GameObject item;
+   public GameObject item;
 
     public bool editorMode = false;
-    bool instantiated = false;
+    public bool instantiated = false;
 
     Vector3 mousePos;
     Subject subject = new Subject();
 
+    ICommand command;
+
+    UIManager ui;
+
+    // Enable and Disable player actions script
+    private void OnEnable()
+    {
+        inputAction.Editor.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputAction.Editor.Disable();
+    }
+
     // Start is called before the first frame update
     //changed awake to start
-    void Start()
+    void Awake()
     {
+        if (!instance)
+        {
+            instance = this;
+        }
         // now uses player input controller
-        inputAction = PlayerInputController.controller.inputAction;
+        //inputAction = PlayerInputController.controller.inputAction;
+        inputAction = PlayerController.instance.inputAction;
 
         inputAction.Editor.EnableEditor.performed += cntxt => SwitchCamera();
 
@@ -39,13 +60,18 @@ public class EditorManager : MonoBehaviour
 
         editorCam.enabled = false;
         mainCam.enabled = true;
+
+        ui = GetComponent<UIManager>();
     }
+
 
     private void SwitchCamera()
     {
         mainCam.enabled = !mainCam.enabled;
         editorCam.enabled = !editorCam.enabled;
+
         Debug.Log("Pressing E");
+        ui.ToggleEditorUI();
     }
 
     private void AddItem(int itemId)
@@ -83,6 +109,9 @@ public class EditorManager : MonoBehaviour
         {
             item.GetComponent<Rigidbody>().useGravity = true;
             item.GetComponent<Collider>().enabled = true;
+
+            command = new PlaceItemCommand(item.transform.position, item.transform);
+            CommandInvoker.AddCommand(command);
 
             instantiated = false;
         }

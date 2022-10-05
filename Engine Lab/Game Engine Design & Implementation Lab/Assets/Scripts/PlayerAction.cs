@@ -205,6 +205,15 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Undo"",
+                    ""type"": ""Button"",
+                    ""id"": ""254ce634-8ca6-4f69-9633-192dfad6241a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -251,6 +260,17 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                     ""action"": ""Dropitem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13519498-80b4-4219-a15a-215562223099"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Undo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -269,6 +289,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         m_Editor_Additem1 = m_Editor.FindAction("Additem1", throwIfNotFound: true);
         m_Editor_Additem2 = m_Editor.FindAction("Additem2", throwIfNotFound: true);
         m_Editor_Dropitem = m_Editor.FindAction("Dropitem", throwIfNotFound: true);
+        m_Editor_Undo = m_Editor.FindAction("Undo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -389,6 +410,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_Editor_Additem1;
     private readonly InputAction m_Editor_Additem2;
     private readonly InputAction m_Editor_Dropitem;
+    private readonly InputAction m_Editor_Undo;
     public struct EditorActions
     {
         private @PlayerAction m_Wrapper;
@@ -397,6 +419,7 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         public InputAction @Additem1 => m_Wrapper.m_Editor_Additem1;
         public InputAction @Additem2 => m_Wrapper.m_Editor_Additem2;
         public InputAction @Dropitem => m_Wrapper.m_Editor_Dropitem;
+        public InputAction @Undo => m_Wrapper.m_Editor_Undo;
         public InputActionMap Get() { return m_Wrapper.m_Editor; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -418,6 +441,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Dropitem.started -= m_Wrapper.m_EditorActionsCallbackInterface.OnDropitem;
                 @Dropitem.performed -= m_Wrapper.m_EditorActionsCallbackInterface.OnDropitem;
                 @Dropitem.canceled -= m_Wrapper.m_EditorActionsCallbackInterface.OnDropitem;
+                @Undo.started -= m_Wrapper.m_EditorActionsCallbackInterface.OnUndo;
+                @Undo.performed -= m_Wrapper.m_EditorActionsCallbackInterface.OnUndo;
+                @Undo.canceled -= m_Wrapper.m_EditorActionsCallbackInterface.OnUndo;
             }
             m_Wrapper.m_EditorActionsCallbackInterface = instance;
             if (instance != null)
@@ -434,6 +460,9 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
                 @Dropitem.started += instance.OnDropitem;
                 @Dropitem.performed += instance.OnDropitem;
                 @Dropitem.canceled += instance.OnDropitem;
+                @Undo.started += instance.OnUndo;
+                @Undo.performed += instance.OnUndo;
+                @Undo.canceled += instance.OnUndo;
             }
         }
     }
@@ -451,5 +480,6 @@ public partial class @PlayerAction : IInputActionCollection2, IDisposable
         void OnAdditem1(InputAction.CallbackContext context);
         void OnAdditem2(InputAction.CallbackContext context);
         void OnDropitem(InputAction.CallbackContext context);
+        void OnUndo(InputAction.CallbackContext context);
     }
 }

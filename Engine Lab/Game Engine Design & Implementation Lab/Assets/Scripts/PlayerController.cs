@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     //Player movement
     public PlayerAction inputAction;
+    //public static PlayerController controller;
     Vector2 move;
     Vector2 rotate;
     private float walkSpeed = 5f;

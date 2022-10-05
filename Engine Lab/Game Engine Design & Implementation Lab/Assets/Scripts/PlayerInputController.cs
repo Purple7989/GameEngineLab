@@ -7,7 +7,7 @@ public class PlayerInputController : MonoBehaviour
     public PlayerAction inputAction;
 
     public static PlayerInputController controller;
-/*
+
     private void OnEnable()
     {
         inputAction.Enable();
@@ -17,7 +17,7 @@ public class PlayerInputController : MonoBehaviour
     {
         inputAction.Disable();
     }
-*/
+
     // Start is called before the first frame update
     void Awake()
     {
